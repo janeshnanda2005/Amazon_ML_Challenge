@@ -1,0 +1,117 @@
+# ==============================================================================
+# Git Ignore Rules for Amazon ML Challenge - Business Entity Resolution
+# ==============================================================================
+
+# --- Python & Bytecode ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# --- Virtual Environments ---
+.venv/
+venv/
+ENV/
+env/
+env.bak/
+venv.bak/
+conda-env/
+
+# --- Large Datasets & Archives ---
+# Keep repository structure via .gitkeep, ignore data downloads
+dataset/**
+!dataset/**/
+!dataset/**/.gitkeep
+*.zip
+*.tar
+*.gz
+*.tgz
+*.bz2
+*.7z
+*.rar
+
+# --- Generated Pipeline Outputs ---
+output/*
+!output/**/.gitkeep
+*.sub
+
+# --- Model Checkpoints & Serialized Binaries ---
+*.pkl
+*.pickle
+*.joblib
+*.pt
+*.pth
+*.bin
+*.onnx
+*.h5
+*.ckpt
+# (Note: Existing sample model in code/business_entity_resolution/models/ is already tracked)
+
+# --- Jupyter Notebooks ---
+.ipynb_checkpoints/
+*-checkpoint.ipynb
+
+# --- IDEs & Code Editors ---
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
+
+# --- OS-Generated Files ---
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# --- Logs, Diagnostics & Temp ---
+*.log
+logs/
+temp/
+tmp/
+*.tmp
+*.bak
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# --- Environment Secrets & Credentials ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials.json
+
+Amazon_Problem_Statement.pdf
