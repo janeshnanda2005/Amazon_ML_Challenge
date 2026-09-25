@@ -6,6 +6,7 @@ one place to change when you move from a laptop sample to the full ~1.7M
 row test set.
 """
 
+import os
 from pathlib import Path
 
 # ---------------------------------------------------------------------------
@@ -13,9 +14,29 @@ from pathlib import Path
 # ---------------------------------------------------------------------------
 ROOT = Path(__file__).resolve().parent.parent
 
-TRAIN_DIR = ROOT / "dataset" / "train"
-TEST_DIR = ROOT / "dataset" / "test"
-OUTPUT_DIR = ROOT / "output"
+# Robust REPO_ROOT finding: look upwards for repo indicators (.git, real, or utils)
+REPO_ROOT = ROOT.parent
+for p in [ROOT, ROOT.parent, ROOT.parent.parent]:
+    if (p / ".git").exists() or (p / "real").exists() or (p / "utils").exists():
+        REPO_ROOT = p
+        break
+
+# Check for real dataset in REPO_ROOT / "real", or top-level "dataset", or local "dataset"
+REAL_DIR = Path(os.environ.get("AMAZON_ML_DATA_DIR", REPO_ROOT / "real"))
+TOP_DATASET = REPO_ROOT / "dataset"
+
+if (REAL_DIR / "train" / "train_source1.tsv").exists() and (REAL_DIR / "test" / "test_source1.tsv").exists():
+    TRAIN_DIR = REAL_DIR / "train"
+    TEST_DIR = REAL_DIR / "test"
+elif (TOP_DATASET / "train" / "train_source1.tsv").exists() and (TOP_DATASET / "test" / "test_source1.tsv").exists():
+    TRAIN_DIR = TOP_DATASET / "train"
+    TEST_DIR = TOP_DATASET / "test"
+else:
+    TRAIN_DIR = ROOT / "dataset" / "train"
+    TEST_DIR = ROOT / "dataset" / "test"
+
+# Allow outputs and models to be stored in REPO_ROOT/output or code/output
+OUTPUT_DIR = REPO_ROOT / "output" if (REPO_ROOT / "output").exists() else (ROOT / "output")
 MODEL_DIR = ROOT / "models"
 
 TRAIN_SOURCE1 = TRAIN_DIR / "train_source1.tsv"
@@ -62,3 +83,10 @@ VALIDATION_FRACTION = 0.2
 
 # F-beta used by the competition (precision-heavy: beta < 1)
 F_BETA = 0.5
+
+# Max Source-1 entities to sample for training & threshold tuning on large datasets.
+# Set to 0 or None to use the full training dataset.
+# 100,000 entities generates ~1M candidate pairs, sufficient for GBDT convergence.
+_max_train = os.environ.get("TRAIN_MAX_ENTITIES", "100000")
+TRAIN_MAX_ENTITIES = int(_max_train) if _max_train and _max_train != "0" else None
+

@@ -62,7 +62,11 @@ function Write-Info ($msg) { Write-Host    "  [INFO] $msg" }
 
 # ── resolve paths ─────────────────────────────────────────────────────────────
 $ScriptDir  = $PSScriptRoot                          # submission_package\
-$CodeDir    = Join-Path $ScriptDir "code\business_entity_resolution"
+if (Test-Path (Join-Path $ScriptDir "code\business_entity_resolution\run_pipeline.py")) {
+    $CodeDir = Join-Path $ScriptDir "code\business_entity_resolution"
+} else {
+    $CodeDir = Join-Path $ScriptDir "code"
+}
 $OrchestratorPy = Join-Path $CodeDir "run_pipeline.py"
 $RequirementsFile = Join-Path $CodeDir "requirements.txt"
 $SyntheticPy = Join-Path $CodeDir "make_synthetic_data.py"

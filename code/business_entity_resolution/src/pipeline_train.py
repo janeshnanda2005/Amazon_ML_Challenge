@@ -37,9 +37,21 @@ def main():
     ground_truth = read_ground_truth(config.TRAIN_GROUND_TRUTH)
     candidate_pool = stack_candidate_pool(source2, source3)
     _log(
-        f"source1={len(source1)} source2={len(source2)} "
-        f"source3={len(source3)} ground_truth_rows={len(ground_truth)}"
+        f"source1={len(source1):,} source2={len(source2):,} "
+        f"source3={len(source3):,} ground_truth_rows={len(ground_truth):,}"
     )
+
+    if config.TRAIN_MAX_ENTITIES and len(source1) > config.TRAIN_MAX_ENTITIES:
+        _log(
+            f"Sampling {config.TRAIN_MAX_ENTITIES:,} Source 1 entities "
+            f"(from {len(source1):,}) for training & threshold search to prevent OOM..."
+        )
+        source1 = source1.sample(
+            config.TRAIN_MAX_ENTITIES, random_state=config.RANDOM_STATE
+        ).reset_index(drop=True)
+        ground_truth = ground_truth[
+            ground_truth["source1_entity_id"].isin(source1["entity_id"])
+        ].reset_index(drop=True)
 
     # ------------------------------------------------------------------
     # 1. Blocking (over the FULL candidate pool - only Source 1 queries

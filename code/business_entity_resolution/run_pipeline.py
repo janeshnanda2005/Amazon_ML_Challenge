@@ -93,15 +93,30 @@ def fail(msg):
 
 # ── path constants ─────────────────────────────────────────────────────────────
 HERE         = Path(__file__).resolve().parent          # business_entity_resolution/
-REPO_ROOT    = HERE                                     # same dir, alias
-UTILS_DIR    = HERE.parent.parent / "utils"             # submission_package/utils/
+# Find repo root
+REPO_ROOT    = HERE.parent.parent if (HERE.parent.parent / "utils").exists() else HERE.parent
+UTILS_DIR    = REPO_ROOT / "utils"
 SRC          = HERE / "src"
-TRAIN_DIR    = HERE / "dataset" / "train"
-TEST_DIR     = HERE / "dataset" / "test"
-OUTPUT_DIR   = HERE / "output"
-MODEL_DIR    = HERE / "models"
+
+if str(HERE) not in sys.path:
+    sys.path.insert(0, str(HERE))
+
+from src import config
+
+TRAIN_DIR    = config.TRAIN_DIR
+TEST_DIR     = config.TEST_DIR
+OUTPUT_DIR   = config.OUTPUT_DIR
+MODEL_DIR    = config.MODEL_DIR
 SYNTHETIC_PY = HERE / "make_synthetic_data.py"
 VALIDATOR_PY = UTILS_DIR / "validate_submission.py"
+
+def _rel(p: Path) -> str:
+    for base in (REPO_ROOT, HERE):
+        try:
+            return str(p.relative_to(base))
+        except ValueError:
+            pass
+    return str(p)
 
 
 # ── optional backend patches ───────────────────────────────────────────────────
@@ -215,9 +230,9 @@ def stage_check_data():
         for p in paths:
             if p.exists():
                 sz = p.stat().st_size
-                log(f"  FOUND  {p.relative_to(HERE)}  ({sz:,} bytes)")
+                log(f"  FOUND  {_rel(p)}  ({sz:,} bytes)")
             else:
-                log(f"  MISSING  {p.relative_to(HERE)}", level="WARN")
+                log(f"  MISSING  {_rel(p)}", level="WARN")
                 missing.append(p)
 
     if missing:

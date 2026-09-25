@@ -56,9 +56,22 @@ def write_results_tsv(id_to_matches: dict, path, id_col: str, match_col: str):
     df.to_csv(path, sep="\t", index=False)
 
 
+def append_results_tsv(id_to_matches: dict, path, id_col: str, match_col: str, write_header: bool = False):
+    """
+    Append a batch of {source1_entity_id: comma-joined-ids} to TSV.
+    Allows streaming test predictions in chunks without holding all results in RAM.
+    """
+    path.parent.mkdir(parents=True, exist_ok=True)
+    rows = list(id_to_matches.items())
+    df = pd.DataFrame(rows, columns=[id_col, match_col])
+    mode = "w" if write_header else "a"
+    df.to_csv(path, sep="\t", index=False, mode=mode, header=write_header)
+
+
 def write_matching_results(predictions: dict, path):
     write_results_tsv(predictions, path, "source1_entity_id", "matched_entity_ids")
 
 
 def write_candidate_pairs(candidates: dict, path):
     write_results_tsv(candidates, path, "source1_entity_id", "candidate_entity_ids")
+
