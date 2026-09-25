@@ -28,28 +28,43 @@ from . import config
 from .features import FEATURE_COLUMNS
 
 
-def train_classifier(feature_table, labels) -> HistGradientBoostingClassifier:
+try:
+    import lightgbm as lgb
+    HAS_LIGHTGBM = True
+except ImportError:
+    HAS_LIGHTGBM = False
+
+
+def train_classifier(feature_table, labels):
     """
     Parameters
     ----------
     feature_table : DataFrame with at least FEATURE_COLUMNS
     labels : array-like of 0/1
 
-    Returns a fitted classifier.
+    Returns a fitted classifier (LightGBM if available, otherwise HistGradientBoosting).
     """
     X = feature_table[FEATURE_COLUMNS].to_numpy(dtype=float)
     y = np.asarray(labels)
 
-    # Candidate pairs are heavily imbalanced toward negatives (most blocked
-    # candidates are not true matches) - class_weight handles that without
-    # needing to manually resample.
-    model = HistGradientBoostingClassifier(
-        max_iter=300,
-        learning_rate=0.08,
-        max_depth=6,
-        class_weight="balanced",
-        random_state=config.RANDOM_STATE,
-    )
+    if HAS_LIGHTGBM:
+        model = lgb.LGBMClassifier(
+            n_estimators=300,
+            num_leaves=63,
+            learning_rate=0.06,
+            class_weight="balanced",
+            random_state=config.RANDOM_STATE,
+            n_jobs=config.LIGHTGBM_THREADS,
+            verbose=-1,
+        )
+    else:
+        model = HistGradientBoostingClassifier(
+            max_iter=300,
+            learning_rate=0.08,
+            max_depth=6,
+            class_weight="balanced",
+            random_state=config.RANDOM_STATE,
+        )
     model.fit(X, y)
     return model
 

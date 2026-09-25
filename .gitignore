@@ -116,3 +116,7 @@ credentials.json
 
 Amazon_Problem_Statement.pdf
 real/
+data/
+*.parquet
+*.duckdb
+*.duckdb.*

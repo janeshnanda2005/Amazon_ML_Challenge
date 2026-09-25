@@ -24,8 +24,12 @@ param(
     [switch]$CheckIds,
     [switch]$LightGBM,
     [switch]$RapidFuzz,
+    [switch]$Benchmark,
+    [int]$BenchmarkRows = 10000,
+    [switch]$ConvertParquet,
+    [switch]$Resume,
     [switch]$Install,
-    [string]$PythonExe = "python"
+    [string]$PythonExe = ""
 )
 
 Set-StrictMode -Version Latest
@@ -71,6 +75,16 @@ $OrchestratorPy = Join-Path $CodeDir "run_pipeline.py"
 $RequirementsFile = Join-Path $CodeDir "requirements.txt"
 $SyntheticPy = Join-Path $CodeDir "make_synthetic_data.py"
 
+# ── resolve python executable ──────────────────────────────────────────────────
+if ([string]::IsNullOrWhiteSpace($PythonExe)) {
+    $VenvPy = Join-Path $ScriptDir ".venv\Scripts\python.exe"
+    if (Test-Path $VenvPy) {
+        $PythonExe = $VenvPy
+    } else {
+        $PythonExe = "python"
+    }
+}
+
 # ── banner ────────────────────────────────────────────────────────────────────
 $StartTime = Get-Date
 Write-Banner `
@@ -80,7 +94,7 @@ Write-Banner `
 Write-Info "Script dir  : $ScriptDir"
 Write-Info "Code dir    : $CodeDir"
 Write-Info "Python exe  : $PythonExe"
-Write-Info "Flags       : Synthetic=$Synthetic  SkipTrain=$SkipTrain  SkipValidate=$SkipValidate  LightGBM=$LightGBM  RapidFuzz=$RapidFuzz  Install=$Install"
+Write-Info "Flags       : Benchmark=$Benchmark  ConvertParquet=$ConvertParquet  Resume=$Resume  LightGBM=$LightGBM  RapidFuzz=$RapidFuzz"
 
 # ── verify Python ─────────────────────────────────────────────────────────────
 Write-Step "Verifying Python installation"
@@ -121,12 +135,15 @@ if (-not (Test-Path $OrchestratorPy)) {
 
 # ── build argument list for run_pipeline.py ───────────────────────────────────
 $PyArgs = @()
-if ($Synthetic)    { $PyArgs += "--synthetic" }
-if ($SkipTrain)    { $PyArgs += "--skip-train" }
-if ($SkipValidate) { $PyArgs += "--skip-validate" }
-if ($CheckIds)     { $PyArgs += "--check-ids" }
-if ($LightGBM)     { $PyArgs += "--lightgbm" }
-if ($RapidFuzz)    { $PyArgs += "--rapidfuzz" }
+if ($Synthetic)      { $PyArgs += "--synthetic" }
+if ($SkipTrain)      { $PyArgs += "--skip-train" }
+if ($SkipValidate)   { $PyArgs += "--skip-validate" }
+if ($CheckIds)       { $PyArgs += "--check-ids" }
+if ($LightGBM)       { $PyArgs += "--lightgbm" }
+if ($RapidFuzz)      { $PyArgs += "--rapidfuzz" }
+if ($Benchmark)      { $PyArgs += "--benchmark"; $PyArgs += "--benchmark-rows"; $PyArgs += "$BenchmarkRows" }
+if ($ConvertParquet) { $PyArgs += "--convert-parquet" }
+if ($Resume)         { $PyArgs += "--resume" }
 
 # ── run the Python orchestrator ───────────────────────────────────────────────
 Write-Step "Launching Python pipeline orchestrator"

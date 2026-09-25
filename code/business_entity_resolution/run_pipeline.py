@@ -357,6 +357,14 @@ def parse_args():
     )
     p.add_argument("--synthetic",      action="store_true",
                    help="Generate fresh synthetic data before running")
+    p.add_argument("--convert-parquet", action="store_true",
+                   help="Force rebuild Parquet cache from raw TSV data")
+    p.add_argument("--benchmark",      action="store_true",
+                   help="Run memory and scalability benchmark without running full pipeline")
+    p.add_argument("--benchmark-rows", type=int, default=10000,
+                   help="Number of entities for benchmark mode (default: 10000)")
+    p.add_argument("--resume",         action="store_true",
+                   help="Resume prediction from last saved checkpoint")
     p.add_argument("--skip-train",     action="store_true",
                    help="Skip training; load existing model from models/")
     p.add_argument("--skip-validate",  action="store_true",
@@ -372,9 +380,22 @@ def parse_args():
 
 def main():
     args = parse_args()
+
+    # Benchmark mode early-exit
+    if args.benchmark:
+        from src.benchmark import run_benchmark
+        run_benchmark(n_rows=args.benchmark_rows)
+        return
+
+    # Force parquet conversion early-exit
+    if args.convert_parquet:
+        from src.convert_to_parquet import convert_all
+        convert_all(force=True)
+        return
+
     banner(
         "Business Entity Resolution Pipeline",
-        "Blocking → Features → GBT Classifier → Threshold → Submission TSVs",
+        "DuckDB + Parquet → Blocking → Features → LightGBM → Incremental TSVs",
     )
 
     total_t0 = time.time()
@@ -385,6 +406,12 @@ def main():
             stage_synthetic()
 
         stage_check_data()
+
+        # Auto-ensure Parquet tables are ready
+        from src.convert_to_parquet import convert_all
+        if not (config.PARQUET_TRAIN_POOL.exists() and config.PARQUET_TEST_POOL.exists()):
+            log("Parquet tables missing in data/parquet/. Running initial streaming conversion...")
+            convert_all(force=False)
 
         if not args.skip_train:
             stage_train(args)

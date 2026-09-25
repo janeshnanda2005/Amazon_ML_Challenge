@@ -52,14 +52,23 @@ FEATURE_COLUMNS = [
 def _prep_records(records: pd.DataFrame) -> pd.DataFrame:
     """Precompute normalized fields once per record (not per pair)."""
     out = records.copy()
-    out["norm_name"] = out["business_name"].map(normalize_name)
-    out["norm_addr"] = out["business_address"].map(normalize_address)
-    out["name_tokens"] = out["norm_name"].map(tokenize)
-    out["addr_tokens"] = out["norm_addr"].map(tokenize)
-    out["postal"] = out["business_address"].map(extract_postal_token)
-    out["name_soundex"] = out["name_tokens"].map(
-        lambda toks: soundex(toks[0]) if toks else ""
-    )
+    if "norm_name" not in out.columns:
+        out["norm_name"] = out["business_name"].map(normalize_name)
+    if "norm_addr" not in out.columns:
+        out["norm_addr"] = out["business_address"].map(normalize_address)
+    if "name_tokens" not in out.columns:
+        out["name_tokens"] = out["norm_name"].map(tokenize)
+    if "addr_tokens" not in out.columns:
+        out["addr_tokens"] = out["norm_addr"].map(tokenize)
+    if "postal" not in out.columns:
+        if "postal_code" in out.columns:
+            out["postal"] = out["postal_code"]
+        else:
+            out["postal"] = out["business_address"].map(extract_postal_token)
+    if "name_soundex" not in out.columns:
+        out["name_soundex"] = out["name_tokens"].map(
+            lambda toks: soundex(toks[0]) if toks else ""
+        )
     return out
 
 
@@ -94,7 +103,10 @@ def build_feature_table(
     needed_pool = set(candidate_pairs["candidate_entity_id"].unique())
 
     s1_sub = source1[source1["entity_id"].isin(needed_s1)]
-    pool_sub = candidate_pool[candidate_pool["entity_id"].isin(needed_pool)]
+    if hasattr(candidate_pool, "fetch_candidate_pool_records"):
+        pool_sub = candidate_pool.fetch_candidate_pool_records(list(needed_pool))
+    else:
+        pool_sub = candidate_pool[candidate_pool["entity_id"].isin(needed_pool)]
 
     s1_prep = _prep_records(s1_sub).set_index("entity_id")
     pool_prep = _prep_records(pool_sub).set_index("entity_id")

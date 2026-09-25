@@ -25,6 +25,13 @@ from functools import lru_cache
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 
+try:
+    from rapidfuzz.distance import Levenshtein as _rf_lev, JaroWinkler as _rf_jw
+    from rapidfuzz import fuzz as _rf_fuzz
+    HAS_RAPIDFUZZ = True
+except ImportError:
+    HAS_RAPIDFUZZ = False
+
 
 # ---------------------------------------------------------------------------
 # Levenshtein distance / ratio
@@ -54,6 +61,8 @@ def levenshtein_distance(a: str, b: str) -> int:
 
 def levenshtein_ratio(a: str, b: str) -> float:
     """Normalized similarity in [0, 1]; 1.0 means identical strings."""
+    if HAS_RAPIDFUZZ:
+        return float(_rf_lev.normalized_similarity(str(a or ""), str(b or "")))
     if not a and not b:
         return 1.0
     dist = levenshtein_distance(a, b)
@@ -110,6 +119,8 @@ def jaro_similarity(a: str, b: str) -> float:
 
 
 def jaro_winkler(a: str, b: str, prefix_weight: float = 0.1) -> float:
+    if HAS_RAPIDFUZZ:
+        return float(_rf_jw.similarity(str(a or ""), str(b or ""), prefix_weight=prefix_weight))
     if a == b:
         return 1.0
     jaro = jaro_similarity(a, b)
@@ -137,6 +148,10 @@ def token_jaccard(tokens_a, tokens_b) -> float:
 
 def token_sort_ratio(tokens_a, tokens_b) -> float:
     """Levenshtein ratio after sorting tokens - robust to word-order swaps."""
+    if HAS_RAPIDFUZZ:
+        sa = " ".join(tokens_a)
+        sb = " ".join(tokens_b)
+        return float(_rf_fuzz.token_sort_ratio(sa, sb) / 100.0)
     a_sorted = " ".join(sorted(tokens_a))
     b_sorted = " ".join(sorted(tokens_b))
     return levenshtein_ratio(a_sorted, b_sorted)
