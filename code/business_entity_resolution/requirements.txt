@@ -1,0 +1,12 @@
+# Core
+pandas==2.2.2
+numpy==1.26.4
+scikit-learn==1.5.1
+joblib==1.4.2
+
+# Recommended production swaps (see src/model.py and src/similarity.py
+# docstrings for exact drop-in swap instructions). Uncomment once you have
+# network access - both are MIT/Apache-2.0 licensed and comply with the
+# challenge's model-license rule.
+lightgbm==4.5.0
+rapidfuzz==3.9.6

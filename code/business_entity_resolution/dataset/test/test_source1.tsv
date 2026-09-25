@@ -1,0 +1,101 @@
+entity_id	business_name	business_address	country
+S1-00001	Sharma Book Depot	201 Main St, Springfield 16508	US
+S1-00002	Cascade Software Inc Corporation	437 Station Rd, Nagpur 41529	France
+S1-00003	Sharma Book Depot	634 Church Rd, Surat 74595	France
+S1-00004	Rajesh General Store Inc	966 MG Road, Fairview 57270	US
+S1-00005	Liberty Hardware Corporation	418 Park Lane, Georgetown 39433	US
+S1-00006	Northstar Freight & Co	540 Park Lane, Pune 52504	France
+S1-00007	Sharma Book Depot	848 MG Road, Nagpur 41923	France
+S1-00008	Om Sai Traders	263 Park Lane, Pune 14280	India
+S1-00009	Blue Ridge Logistics & Co	436 Main St, Fairview 87679	US
+S1-00010	Om Sai Traders Inc	799 Park Lane, Springfield 78510	US
+S1-00011	Cascade Software Inc Pvt Ltd	618 Park Lane, Riverside 24833	US
+S1-00012	Om Sai Traders Pvt Ltd	129 Church Rd, Surat	India
+S1-00013	Rajesh General Store Corporation	92 5th Ave, Springfield 31574	US
+S1-00014	Liberty Hardware Corp	731 5th Ave, Nagpur 63810	France
+S1-00015	Blue Ridge Logistics & Co	305 MG Road, Surat 41908	France
+S1-00016	Northstar Freight Corp	770 MG Road, Nagpur 15462	India
+S1-00017	Rajesh General Store Inc	298 Main St, Nagpur 27687	France
+S1-00018	Blue Ridge Logistics LLC	472 MG Road, Georgetown 26778	US
+S1-00019	Rajesh General Store Inc	22 Station Rd, Springfield 18128	US
+S1-00020	Shree Ganesh Motors	554 Church Rd, Pune 16634	India
+S1-00021	Blue Ridge Logistics Inc	710 5th Ave, Indore 96369	France
+S1-00022	Om Sai Traders LLC	751 Station Rd, Pune	France
+S1-00023	Kumar Electronics Corporation	820 MG Road, Georgetown 81760	US
+S1-00024	Liberty Hardware Inc	497 Park Lane, Springfield 10227	US
+S1-00025	Golden Gate Consulting LLC	94 5th Ave, Surat 61512	France
+S1-00026	Kumar Electronics Inc	612 Park Lane, Springfield	US
+S1-00027	Cascade Software Inc & Co	661 MG Road, Pune 54644	France
+S1-00028	Sunrise Bakery & Co	358 Park Lane, Springfield 55994	US
+S1-00029	Shree Ganesh Motors Inc	222 5th Ave, Indore 26217	India
+S1-00030	Golden Gate Consulting Pvt Ltd	666 MG Road, Pune	India
+S1-00031	Pioneer Auto Parts	938 5th Ave, Pune 56977	India
+S1-00032	Patel Textiles Pvt Ltd	361 Park Lane, Indore 49842	India
+S1-00033	Anand Pharmacy Inc	46 Main St, Riverside 56749	US
+S1-00034	Pioneer Auto Parts Pvt Ltd	805 Main St, Fairview 82148	US
+S1-00035	Pioneer Auto Parts Inc	628 MG Road, Indore	India
+S1-00036	Patel Textiles Inc	865 Station Rd, Indore 88770	France
+S1-00037	Anand Pharmacy Inc	260 5th Ave, Pune 51276	France
+S1-00038	Golden Gate Consulting Corporation	353 Park Lane, Georgetown 53321	US
+S1-00039	Sharma Book Depot Corp	717 Church Rd, Pune 21200	France
+S1-00040	Blue Ridge Logistics LLC	866 Church Rd, Pune 31406	India
+S1-00041	Patel Textiles LLC	520 MG Road, Springfield 73043	US
+S1-00042	Om Sai Traders Pvt Ltd	271 5th Ave, Pune	France
+S1-00043	Cascade Software Inc Inc	977 Main St, Surat 97931	France
+S1-00044	Sunrise Bakery Corp	778 Park Lane, Springfield 98734	US
+S1-00045	Liberty Hardware	105 5th Ave, Fairview 36281	US
+S1-00046	Om Sai Traders & Co	795 MG Road, Nagpur 46007	France
+S1-00047	Pioneer Auto Parts Inc	815 Station Rd, Surat 87381	France
+S1-00048	Sharma Book Depot Corporation	925 5th Ave, Nagpur	France
+S1-00049	Anand Pharmacy & Co	540 Station Rd, Indore 39692	France
+S1-00050	Patel Textiles Inc	165 Church Rd, Surat	France
+S1-00051	Rajesh General Store Pvt Ltd	757 5th Ave, Pune 95103	India
+S1-00052	Rajesh General Store & Co	814 Main St, Indore 73304	France
+S1-00053	Sharma Book Depot & Co	399 MG Road, Riverside 88219	US
+S1-00054	Blue Ridge Logistics	94 MG Road, Indore 62342	France
+S1-00055	Liberty Hardware LLC	367 MG Road, Nagpur 24540	India
+S1-00056	Kumar Electronics Corporation	806 MG Road, Georgetown 91959	US
+S1-00057	Cascade Software Inc LLC	497 5th Ave, Nagpur 83145	India
+S1-00058	Rajesh General Store & Co	34 Station Rd, Nagpur 51202	France
+S1-00059	Cascade Software Inc Pvt Ltd	958 Church Rd, Riverside	US
+S1-00060	Anand Pharmacy Corp	871 5th Ave, Surat 23091	France
+S1-00061	Rajesh General Store Inc	551 5th Ave, Surat 86038	France
+S1-00062	Kumar Electronics Pvt Ltd	341 MG Road, Surat 93869	India
+S1-00063	Shree Ganesh Motors Pvt Ltd	760 5th Ave, Fairview 92661	US
+S1-00064	Northstar Freight LLC	229 5th Ave, Surat 33575	India
+S1-00065	Sunrise Bakery Pvt Ltd	41 Park Lane, Indore 81616	India
+S1-00066	Liberty Hardware LLC	40 Church Rd, Pune	India
+S1-00067	Golden Gate Consulting & Co	672 MG Road, Nagpur 39894	France
+S1-00068	Kumar Electronics	185 Main St, Indore 17878	India
+S1-00069	Pioneer Auto Parts & Co	127 Church Rd, Indore	India
+S1-00070	Patel Textiles & Co	256 5th Ave, Indore 91107	France
+S1-00071	Evergreen Landscaping Corporation	835 Church Rd, Surat	France
+S1-00072	Anand Pharmacy LLC	314 5th Ave, Pune 11168	India
+S1-00073	Sunrise Bakery LLC	340 Church Rd, Riverside 21038	US
+S1-00074	Evergreen Landscaping	898 MG Road, Pune 45200	France
+S1-00075	Sunrise Bakery Pvt Ltd	439 MG Road, Surat 70663	France
+S1-00076	Kumar Electronics Corporation	962 Park Lane, Riverside 61759	US
+S1-00077	Sharma Book Depot Pvt Ltd	59 Main St, Nagpur 69932	India
+S1-00078	Rajesh General Store Pvt Ltd	321 Station Rd, Indore 57621	France
+S1-00079	Liberty Hardware Corporation	8 5th Ave, Indore 79307	India
+S1-00080	Golden Gate Consulting Corp	807 Park Lane, Riverside 33332	US
+S1-00081	Om Sai Traders Inc	275 Station Rd, Indore 50961	France
+S1-00082	Evergreen Landscaping Inc	958 Park Lane, Fairview	US
+S1-00083	Pioneer Auto Parts & Co	234 Church Rd, Nagpur 72487	India
+S1-00084	Golden Gate Consulting Inc	798 5th Ave, Pune 99520	India
+S1-00085	Liberty Hardware Pvt Ltd	480 MG Road, Riverside 61152	US
+S1-00086	Shree Ganesh Motors & Co	19 5th Ave, Surat 68668	India
+S1-00087	Patel Textiles LLC	316 MG Road, Georgetown	US
+S1-00088	Golden Gate Consulting	962 MG Road, Georgetown 15324	US
+S1-00089	Om Sai Traders Corporation	606 Station Rd, Riverside	US
+S1-00090	Northstar Freight Corp	392 Church Rd, Springfield 85771	US
+S1-00091	Blue Ridge Logistics Inc	355 Main St, Nagpur 34816	France
+S1-00092	Northstar Freight Corp	20 Station Rd, Indore 21175	India
+S1-00093	Golden Gate Consulting Corporation	429 Main St, Pune 35850	India
+S1-00094	Om Sai Traders Inc	405 Station Rd, Surat 24170	France
+S1-00095	Om Sai Traders Corporation	184 Station Rd, Fairview 40856	US
+S1-00096	Rajesh General Store LLC	734 Church Rd, Riverside 77485	US
+S1-00097	Sunrise Bakery & Co	353 Main St, Indore 17554	India
+S1-00098	Sunrise Bakery Inc	963 Church Rd, Nagpur 51536	India
+S1-00099	Northstar Freight Inc	102 Main St, Riverside 92334	US
+S1-00100	Patel Textiles & Co	460 5th Ave, Springfield 27896	US
